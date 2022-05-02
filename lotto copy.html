@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin : 0;
+            padding : 0;
+        }
+
+        .num_container {
+            margin: 0 auto;
+            box-sizing: border-box;
+            width: 443px;
+            padding-bottom: 12px;
+        }
+
+        .flex {
+            display: flex;
+            flex-wrap: wrap;
+            padding : 12px;
+            padding-left : 0;
+        }
+
+        .flex > div {
+            margin-left: 12px;
+        }
+
+        .extract {
+            width: 180px;
+            height: 50px;
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="margin : 30px; text-align: center;">lotto 번호 추출기</h1>
+    <fieldset class="num_container">
+        <legend style="margin-left: 12px;">포함할 번호</legend>
+        <form>
+            <div  id = "include_number" class = "flex">
+    
+            </div>
+            <div style="text-align: center;">
+                <button type="reset">초기화</button>
+            </div>
+        </form>
+    </fieldset>
+    <fieldset class="num_container">
+        <legend style="margin-left: 12px;">제외할 번호</legend>
+        <form>
+            <div id = "except_number" class = "flex">
+
+            </div>
+            <div style="text-align: center;" >
+                <button type="reset">초기화</button>
+            </div>
+        </form>
+    </fieldset>
+    <div style="margin : 30px; text-align: center;"><button class="extract">번호추출</button></div>
+</body>
+<script>
+    function createNum(el, perfix) {
+        for(i = 1; i <= 45; i++){
+            let item = document.createElement("div")
+            let label = document.createElement("label")
+            let input = document.createElement("input")
+        
+            label.setAttribute("for", perfix + i)
+            label.innerText = i < 10 ? "0" + i : i
+            input.setAttribute("type", "checkbox")
+            input.id = perfix + i
+    
+            item.appendChild(label)
+            item.appendChild(input)
+            el.appendChild(item)
+        }
+    }
+    let include = document.getElementById("include_number")
+    let except = document.getElementById("except_number")
+    
+    createNum(include, "in_")
+    createNum(except, "ex_")
+</script>
+</html>
