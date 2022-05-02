@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>로또당첨되세요~</title>
     <style>
         * {
             margin : 0;
@@ -34,16 +34,27 @@
             height: 50px;
             font-size: 24px;
         }
+
+        .number_box {
+            margin: 0 auto;
+            margin-bottom: 30px;
+            width: 560px;
+            box-sizing: border-box;
+            border-collapse: collapse;
+            border : 1px solid black;
+        }
+
+        .number_box td {
+            border-top : 1px solid black;
+        }
     </style>
 </head>
 <body>
-    <h1 style="margin : 30px; text-align: center;">lotto 번호 추출기</h1>
+    <h1 style="margin : 30px; text-align: center;">로또 번호 추출기</h1>
     <fieldset class="num_container">
         <legend style="margin-left: 12px;">포함할 번호</legend>
         <form>
-            <div  id = "include_number" class = "flex">
-    
-            </div>
+            <div  id = "include_number" class = "flex"></div>
             <div style="text-align: center;">
                 <button type="reset">초기화</button>
             </div>
@@ -52,15 +63,29 @@
     <fieldset class="num_container">
         <legend style="margin-left: 12px;">제외할 번호</legend>
         <form>
-            <div id = "except_number" class = "flex">
-
-            </div>
+            <div id = "except_number" class = "flex"></div>
             <div style="text-align: center;" >
                 <button type="reset">초기화</button>
             </div>
         </form>
     </fieldset>
     <div style="margin : 30px; text-align: center;"><button class="extract">번호추출</button></div>
+    <table class="number_box">
+        <thead>
+            <tr><th>한 줄 번호 추출!</th></tr>
+        </thead>
+        <tbody>
+            <tr><td style="height: 27px;"></td></tr>
+        </tbody>
+    </table>
+    <table class="number_box">
+        <thead>
+            <tr><th>다섯 줄 번호 추출!</th></tr>
+        </thead>
+        <tbody>
+            <tr><td style="height: 27px;"></td></tr>
+        </tbody>
+    </table>
 </body>
 <script>
     function createNum(el, perfix) {
@@ -79,6 +104,7 @@
             el.appendChild(item)
         }
     }
+
     let include = document.getElementById("include_number")
     let except = document.getElementById("except_number")
     
