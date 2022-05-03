@@ -115,7 +115,7 @@
             input.setAttribute("type", "checkbox")
             input.setAttribute("value", i)
             input.id = perfix + i
-            // input.name = perfix
+            input.name = input.id.substr(0,3) === "ex_" ? "except" : "include"
     
             item.appendChild(label)
             item.appendChild(input)
@@ -126,34 +126,43 @@
     let include = document.getElementById("include_number")
     let except = document.getElementById("except_number")
     
-
     createNum(include, "in_")
     createNum(except, "ex_")
 
-    // 오늘은 일단 여기까지 해.. 이거 내가 좀 알아보고 내일 알려줄게. 알았어. 고마워.
 
-    // 제외할번호 포함할번호 선태값 받고싶은거지? 맞아
-    // let iiv = include.getElementsByTagName("div")[0].getElementsByTagName("input")[0].value
-    // let eiv = except.getElementsByTagName("div")[0].getElementsByTagName("input")[0].value
-    // console.log(iiv)
-    // what? 이거 왜 안 돼?
-    // 뭐가 안되는데?
-    // 여기에서 오류나. 팡션이 아니라고.
+    let exName = document.getElementsByName("except")
+    let inName = document.getElementsByName("include")
+
+
+    // 만약 exName.value == inName.value 라면 방금 누른 input의 속성을 setAttribute로 ("onclick", "return false;")로 바꿔줄 것.
 
     // 이 함수는 내가 원하는 값을 계산해서 다른 곳에서 쓰기 위해서 값을 반환해주어야 해
     // return은 값을 반환해주는 명령어.
-    function createLottoArr() {
+    function createLottoArr() { 
         let lottoarray = new Array();
         for (i=0; i<6; i++) {
             let randomNum = Math.floor(Math.random()*45)+1;
-            if(lottoarray.indexOf(randomNum) === -1) {
+                                                                             //    여기서 숫자가 아니라 문자열이 반환되서 그랬어;;...
+                                                                             // 자바스크립트가 짜증나는 이유 중 하나야...
+            let notInclude = Array.from(exName).filter(el => el.checked).map(el => parseInt(el.value) )
+
+            let condition1 = lottoarray.indexOf(randomNum) === -1
+            let condition2 =  notInclude.indexOf(randomNum) === -1
+
+            if(
+                // 여태껏 뽑은 번호 중 randomNum이 없는가
+                condition1
+                &&
+                // 사용자가 제외한 번호 중 randomNum이 없는가
+                condition2
+            ) {
                 lottoarray.push(randomNum);
             } else {
                 i--;
             }
         }
         // 리턴한값을
-        return lottoarray;
+        return lottoarray.sort();
     }
     
     function oneLottoArray() {
