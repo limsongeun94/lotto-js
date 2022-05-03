@@ -51,11 +51,14 @@
 
         .number_box th {            
             padding: 8px;
+            line-height: 2em;
         }
 
         .number_box td {            
-            padding: 12px;
+            padding: 8px;
             border-top : 1px solid black;
+            font-size: 1.5em;
+            line-height: 2em;
         }
     </style>
 </head>
@@ -110,7 +113,9 @@
             label.setAttribute("for", perfix + i)
             label.innerText = i < 10 ? "0" + i : i
             input.setAttribute("type", "checkbox")
+            input.setAttribute("value", i)
             input.id = perfix + i
+            // input.name = perfix
     
             item.appendChild(label)
             item.appendChild(input)
@@ -121,9 +126,19 @@
     let include = document.getElementById("include_number")
     let except = document.getElementById("except_number")
     
+
     createNum(include, "in_")
     createNum(except, "ex_")
 
+    // 오늘은 일단 여기까지 해.. 이거 내가 좀 알아보고 내일 알려줄게. 알았어. 고마워.
+
+    // 제외할번호 포함할번호 선태값 받고싶은거지? 맞아
+    // let iiv = include.getElementsByTagName("div")[0].getElementsByTagName("input")[0].value
+    // let eiv = except.getElementsByTagName("div")[0].getElementsByTagName("input")[0].value
+    // console.log(iiv)
+    // what? 이거 왜 안 돼?
+    // 뭐가 안되는데?
+    // 여기에서 오류나. 팡션이 아니라고.
 
     // 이 함수는 내가 원하는 값을 계산해서 다른 곳에서 쓰기 위해서 값을 반환해주어야 해
     // return은 값을 반환해주는 명령어.
