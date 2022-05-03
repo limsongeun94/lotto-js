@@ -80,8 +80,8 @@
         </form>
     </fieldset>
     <div style="margin : 30px; text-align: center;">
-        <button class="extract" onclick=oneLottoArray()>한 줄 추출</button>
-        <button class="extract">다섯 줄 추출</button>
+        <button class="extract" onclick="oneLottoArray()">한 줄 추출</button>
+        <button class="extract" onclick="fiveLottoArray()">다섯 줄 추출</button>
     </div>
     <table class="number_box">
         <thead>
@@ -96,7 +96,7 @@
             <tr><th>다섯 줄 번호 추출!</th></tr>
         </thead>
         <tbody>
-            <tr><td style="text-align: center;"></td></tr>
+            <tr><td id="five"  style="text-align: center;"></td></tr>
         </tbody>
     </table>
 </body>
@@ -124,15 +124,31 @@
     createNum(include, "in_")
     createNum(except, "ex_")
 
-    function oneLottoArray() {
-        lottoarray = [];
-        for (i=0; i<5; i++) {
-            let randomNum = Math.floor(Math.random()*45)+1;
-            let runCombi = lottoarray.push(randomNum);
-        }
-        document.getElementById("one").innerText = "1번 줄 : " + lottoarray
-    }
+    // function oneLottoArray() {
+    //     lottoarray = [];
+    //     for (i=0; i<5; i++) {
+    //         let randomNum = Math.floor(Math.random()*45)+1;
+    //         runCombi = lottoarray.push(randomNum);
+    //     }
+    //     document.getElementById("one").innerText = "1번 줄 : " + lottoarray
+    // }
 
+    function fiveLottoArray() {
+        // document.getElementById("one").innerHTML 가 포문 안에 있으면 계속 새로운 값으로 갱신됨.
+        //  그러니 for문 밖에 result라는 변수를 하나 선언해사
+        let result = []
+        for (a=0; a<5; a++) {
+            let lottoarray = new Array();
+            for (i=0; i<6; i++) {
+                let randomNum = Math.floor(Math.random()*45)+1;
+                runCombi = lottoarray.push(randomNum);
+            }
+            // for문 안에 result 배열에 lottoarray 배열을 푸쉬해분 다음에
+            result.push(lottoarray)
+        }
+        // 포문 바깥에서 딱 한번만 HTML에 삽입해주면 됨.
+        document.getElementById("five").innerHTML = result.join("<br />")
+    }
 
 </script>
 </html>
