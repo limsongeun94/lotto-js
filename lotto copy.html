@@ -80,15 +80,15 @@
         </form>
     </fieldset>
     <div style="margin : 30px; text-align: center;">
-        <button class="extract" onclick="runCombi(1, 45)">한줄추출</button>
-        <button class="extract">한줄추출</button>
+        <button class="extract" onclick=oneLottoArray()>한 줄 추출</button>
+        <button class="extract">다섯 줄 추출</button>
     </div>
     <table class="number_box">
         <thead>
             <tr><th>한 줄 번호 추출!</th></tr>
         </thead>
         <tbody>
-            <tr><td id="pretty" style="text-align: center;">1번 줄 : 1 2 3 4 5</td></tr>
+            <tr><td id="one" style="text-align: center;"></td></tr>
         </tbody>
     </table>
     <table class="number_box">
@@ -124,14 +124,15 @@
     createNum(include, "in_")
     createNum(except, "ex_")
 
-    // function runCombi(min, max) {
-    //     min = Math.ceil(min);
-    //     max = Math.floor(max)
-    //     let number = Math.floor(Math.random() * (max - min + 1)) + min;
-    //     document.getElementById("pretty").innerText = number;
-    // }
+    function oneLottoArray() {
+        lottoarray = [];
+        for (i=0; i<5; i++) {
+            let randomNum = Math.floor(Math.random()*45)+1;
+            let runCombi = lottoarray.push(randomNum);
+        }
+        document.getElementById("one").innerText = "1번 줄 : " + lottoarray
+    }
 
-    // 하하하고양이
 
 </script>
 </html>
