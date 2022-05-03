@@ -124,31 +124,76 @@
     createNum(include, "in_")
     createNum(except, "ex_")
 
-    // function oneLottoArray() {
-    //     lottoarray = [];
-    //     for (i=0; i<5; i++) {
-    //         let randomNum = Math.floor(Math.random()*45)+1;
-    //         runCombi = lottoarray.push(randomNum);
-    //     }
-    //     document.getElementById("one").innerText = "1번 줄 : " + lottoarray
-    // }
+
+    // 이 함수는 내가 원하는 값을 계산해서 다른 곳에서 쓰기 위해서 값을 반환해주어야 해
+    // return은 값을 반환해주는 명령어.
+    function createLottoArr() {
+        let lottoarray = new Array();
+        for (i=0; i<6; i++) {
+            let randomNum = Math.floor(Math.random()*45)+1;
+            if(lottoarray.indexOf(randomNum) === -1) {
+                lottoarray.push(randomNum);
+            } else {
+                i--;
+            }
+        }
+        // 리턴한값을
+        return lottoarray;
+    }
+    
+    function oneLottoArray() {
+        // 그래야 이렇게 다른 함수에서 값을 반환받아서 쓸 수 있어.
+        // 받아서
+        const result = createLottoArr()
+        // 적용
+        document.getElementById("one").innerText = result
+    }
 
     function fiveLottoArray() {
-        // document.getElementById("one").innerHTML 가 포문 안에 있으면 계속 새로운 값으로 갱신됨.
-        //  그러니 for문 밖에 result라는 변수를 하나 선언해사
         let result = []
         for (a=0; a<5; a++) {
-            let lottoarray = new Array();
-            for (i=0; i<6; i++) {
-                let randomNum = Math.floor(Math.random()*45)+1;
-                runCombi = lottoarray.push(randomNum);
-            }
-            // for문 안에 result 배열에 lottoarray 배열을 푸쉬해분 다음에
-            result.push(lottoarray)
+            // 반복문 내에서 받아서 배열에 넣고
+            result.push(createLottoArr())
         }
-        // 포문 바깥에서 딱 한번만 HTML에 삽입해주면 됨.
+        // 적용
         document.getElementById("five").innerHTML = result.join("<br />")
     }
+
+
+
+    // function oneLottoArray() {
+    //     let lottoarray = new Array();
+    //     for (i=0; i<6; i++) {
+    //             let randomNum = Math.floor(Math.random()*45)+1;
+    //             if(lottoarray.indexOf(randomNum) === -1) {
+    //                 lottoarray.push(randomNum);
+    //             } else {
+    //                 i--;
+    //             }
+    //         }
+    //     document.getElementById("one").innerText = lottoarray
+    // }
+
+    // function fiveLottoArray() {
+    //     // document.getElementById("one").innerHTML 가 포문 안에 있으면 계속 새로운 값으로 갱신됨.
+    //     //  그러니 for문 밖에 result라는 변수를 하나 선언해사
+    //     let result = []
+    //     for (a=0; a<5; a++) {
+    //         let lottoarray = new Array();
+    //         for (i=0; i<6; i++) {
+    //             let randomNum = Math.floor(Math.random()*45)+1;
+    //             if(lottoarray.indexOf(randomNum) === -1) {
+    //                 lottoarray.push(randomNum);
+    //             } else {
+    //                 i--;
+    //             }
+    //         }
+    //         // for문 안에 result 배열에 lottoarray 배열을 푸쉬해분 다음에
+    //         result.push(lottoarray)
+    //     }
+    //     // 포문 바깥에서 딱 한번만 HTML에 삽입해주면 됨.
+    //     document.getElementById("five").innerHTML = result.join("<br />")
+    // }
 
 </script>
 </html>
