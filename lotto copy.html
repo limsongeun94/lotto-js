@@ -138,14 +138,26 @@
 
     // 이 함수는 내가 원하는 값을 계산해서 다른 곳에서 쓰기 위해서 값을 반환해주어야 해
     // return은 값을 반환해주는 명령어.
+
+    // 이러고 뻗는거야? 응
+    // 어떤 알고리즘을 썼는지는 잘 모르겠는데
+    // 포함할 숫자는 어렵지않아.
+
+    // 포함할 숫자니까. 그냥 처음부터 포함시킨다음에 남은 숫자들만 랜덤으로 뽑아.
+    // 포함할 숫자는 어디서 처리해?
     function createLottoArr() { 
         let lottoarray = new Array();
-        for (i=0; i<6; i++) {
-            let randomNum = Math.floor(Math.random()*45)+1;
-                                                                             //    여기서 숫자가 아니라 문자열이 반환되서 그랬어;;...
-                                                                             // 자바스크립트가 짜증나는 이유 중 하나야...
-            let notInclude = Array.from(exName).filter(el => el.checked).map(el => parseInt(el.value) )
 
+        let notInclude = Array.from(exName).filter(el => el.checked).map(el => parseInt(el.value) )
+        let isInclude = Array.from(inName).filter(el => el.checked).map(el => parseInt(el.value) )
+        
+        lottoarray = lottoarray.concat(isInclude)
+
+        let selectNum = isInclude.length
+        let rest = 6 - selectNum
+        for (i=0; i<rest; i++) {
+            let randomNum = Math.floor(Math.random()*45)+1;
+                                                              
             let condition1 = lottoarray.indexOf(randomNum) === -1
             let condition2 =  notInclude.indexOf(randomNum) === -1
 
@@ -155,13 +167,20 @@
                 &&
                 // 사용자가 제외한 번호 중 randomNum이 없는가
                 condition2
+                // &&
+                // condition3
             ) {
                 lottoarray.push(randomNum);
+                // 일단 푸시 메서드는 체이닝이 안돼... 푸시.푸시.푸시... 이렇게는 못써 ㅋㅋ
             } else {
                 i--;
             }
         }
         // 리턴한값을
+        // 정렬만 좀 내가 해줄게
+        // 정렬은 꼭 해야 하는 거야?
+        // 꼭 그렇진 않은데 보통 정렬되서 나오잖아. 로또번호. 보통 정렬 안 돼서 나오던데? ..? 그런가??
+        // 일단 나머지 직접해봐 ㅋㅋ 엥.......아라써...........
         return lottoarray.sort();
     }
     
