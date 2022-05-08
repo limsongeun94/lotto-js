@@ -104,19 +104,47 @@
     </table>
 </body>
 <script>
-    function createNum(el, perfix) {
-        for(i = 1; i <= 45; i++){
+    let inClicked = new Array
+    let exClicked = new Array
+    
+    function createNum(el, prefix) {
+        for(let i = 1; i <= 45; i++){
             let item = document.createElement("div")
             let label = document.createElement("label")
             let input = document.createElement("input")
         
-            label.setAttribute("for", perfix + i)
+            label.setAttribute("for", prefix + i)
             label.innerText = i < 10 ? "0" + i : i
             input.setAttribute("type", "checkbox")
             input.setAttribute("value", i)
-            input.id = perfix + i
+            input.id = prefix + i
             input.name = input.id.substr(0,3) === "ex_" ? "except" : "include"
-    
+            
+
+            if(prefix == "in_") {
+                input.onchange = (evt) => {
+                    if(inClicked.length + 1 > 6){
+                        alert("포함할 번호는 6개 넘게 선택할 수 없습니다.")
+                        // return false
+                        evt.target.checked = false
+                    } else {
+                        inClicked.push(i)
+                    }
+                    console.log(inClicked)
+                }
+            }
+            else if (prefix == "ex_") {
+                input.onchange = (evt) => {
+                    if(exClicked.length + 1 > 39){
+                        alert("포함할 번호는 39개 넘게 선택할 수 없습니다.")
+                        // return false
+                        evt.target.checked = false
+                    } else {
+                        exClicked.push(i)
+                    }
+                }
+            }
+
             item.appendChild(label)
             item.appendChild(input)
             el.appendChild(item)
@@ -135,16 +163,11 @@
 
 
     // 만약 exName.value == inName.value 라면 방금 누른 input의 속성을 setAttribute로 ("onclick", "return false;")로 바꿔줄 것.
+    // 만약 inName가 6개보다 많이 클릭되었으면 "포함할 번호는 6개 넘게 선택할 수 없습니다."라는 얼럿창을 띄우며 7번째 누른 input 속성을 setAttribute로 ("onclick", "return false;")로 바꿔줄 것.
+    // 만약 exName가 39개보다 많이 클릭되었으면 "제외할 번호는 39개 넘게 선택할 수 없습니다."라는 얼럿창을 띄우며 40번째 누른 input 속성을 setAttribute로 ("onclick", "return false;")로 바꿔줄 것.
 
-    // 이 함수는 내가 원하는 값을 계산해서 다른 곳에서 쓰기 위해서 값을 반환해주어야 해
-    // return은 값을 반환해주는 명령어.
 
-    // 이러고 뻗는거야? 응
-    // 어떤 알고리즘을 썼는지는 잘 모르겠는데
-    // 포함할 숫자는 어렵지않아.
 
-    // 포함할 숫자니까. 그냥 처음부터 포함시킨다음에 남은 숫자들만 랜덤으로 뽑아.
-    // 포함할 숫자는 어디서 처리해?
     function createLottoArr() { 
         let lottoarray = new Array();
 
@@ -176,11 +199,6 @@
                 i--;
             }
         }
-        // 리턴한값을
-        // 정렬만 좀 내가 해줄게
-        // 정렬은 꼭 해야 하는 거야?
-        // 꼭 그렇진 않은데 보통 정렬되서 나오잖아. 로또번호. 보통 정렬 안 돼서 나오던데? ..? 그런가??
-        // 일단 나머지 직접해봐 ㅋㅋ 엥.......아라써...........
         return lottoarray.sort();
     }
     
