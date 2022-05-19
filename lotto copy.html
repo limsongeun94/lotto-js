@@ -123,12 +123,26 @@
 
             if(prefix == "in_") {
                 input.onchange = (evt) => {
-                    if(inClicked.length + 1 > 6){
-                        alert("포함할 번호는 6개 넘게 선택할 수 없습니다.")
-                        // return false
-                        evt.target.checked = false
-                    } else {
-                        inClicked.push(i)
+                    // 체크 해제
+                    if (evt.target.checked == false) {
+                        inClicked = inClicked.filter(x => x != i)
+                    }
+                    // 체크 시도 
+                    else {
+                        // 체크 불가 1
+                        if (inClicked.length + 1 > 6 ) {
+                            alert("포함할 번호는 6개 넘게 선택할 수 없습니다.")
+                            evt.target.checked = false
+                        }
+                        // 체크 불가 2
+                        else if (document.getElementById("ex_"+i).checked == true ) {
+                            alert("제외할 번호와 같은 숫자의 포함할 번호는 선택할 수 없습니다.")
+                            evt.target.checked = false
+                        }
+                        // 체크 가능 
+                        else {
+                            inClicked.push(i)
+                        }
                     }
                     console.log(inClicked)
                 }
