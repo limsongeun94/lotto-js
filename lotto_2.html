@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>당첨기원</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+
+      fieldset {
+        margin: 0 auto;
+        margin-top: 20px;
+        padding: 20px;
+        box-sizing: border-box;
+        width: 450px;
+        display: flex;
+        flex-wrap: wrap;
+      }
+
+      legend {
+        margin: 0 auto;
+      }
+
+      .ex_num_box,
+      .in_num_box > label {
+        font-size: 2em;
+      }
+
+      .ex_num_box,
+      .in_num_box > input {
+        font-size: 2em;
+      }
+    </style>
+  </head>
+  <body>
+    <h2 style="text-align: center; margin-top: 20px">로또 번호 추출기</h2>
+    <fieldset id="in_field">
+      <legend>포함할 번호</legend>
+    </fieldset>
+    <fieldset id="ex_field">
+      <legend>제외할 번호</legend>
+    </fieldset>
+  </body>
+  <script>
+    // HTML에 있는 id와 안맞아서 그런가봐
+    const in_field = document.getElementById("in_field");
+    const ex_field = document.getElementById("ex_field");
+    const addElement = (element, inex) => {
+      for (i = 1; i < 46; i++) {
+        let num_box = document.createElement("div");
+        let label = document.createElement("label");
+        let checkbox = document.createElement("input");
+
+        num_box.setAttribute("class", inex + "_num_box");
+        label.setAttribute("for", inex + "_" + i);
+        label.innerText = i;
+        checkbox.setAttribute("type", "checkbox");
+        checkbox.id = inex + "_" + i;
+        checkbox.setAttribute("name", inex + "num");
+
+        num_box.appendChild(label);
+        num_box.appendChild(checkbox);
+        // 변수 이름을 이렇게 쓸 수는 없어
+        // in_field ex_field는 식별자 이름이고
+        // inex랑 "_field"는 문자열이야.
+        // String에 appendChild라는 메서드는 없어.
+        // 이거를 받고 싶었던거지? 응
+        // if문으로 inex값이 뭔지 판별해서 각각 코드를 작성하는게 좋을거같아.
+        // 저번에 할 때는 여기 괄호 안에 인자? 두 개 넣어서 했는데... 그게 머였지.. 나도 기억 안나네
+        //  이런 식으로... 안되네... 왜지
+        element.appendChild(num_box);
+      }
+    };
+
+    addElement(in_field, "in");
+    addElement(ex_field, "ex");
+  </script>
+</html>
