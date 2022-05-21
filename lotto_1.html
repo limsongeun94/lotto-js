@@ -60,6 +60,24 @@
         font-size: 1.5em;
         line-height: 2em;
       }
+
+      .ball-container {
+        display: flex;
+        justify-content: center;
+      }
+
+      .number-ball {
+        background-color: rgb(239, 239, 239);
+        border: 1px solid rgb(59, 59, 59);
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        margin-right: 10px;
+      }
+
+      .number-ball:last-child {
+        margin-right: 0px;
+      }
     </style>
   </head>
   <body>
@@ -236,25 +254,53 @@
           i--;
         }
       }
-      return lottoarray.sort();
+      return lottoarray;
+    }
+
+    function createNumberBallElement(numbers) {
+      const container = document.createElement("div");
+      container.classList.add("ball-container");
+      const numberEls = numbers.map((x) => {
+        const el = document.createElement("div");
+        el.innerText = x;
+        el.classList.add("number-ball");
+        return el;
+      });
+      numberEls.forEach((el) => {
+        container.appendChild(el);
+      });
+      return container;
     }
 
     function oneLottoArray() {
-      // 그래야 이렇게 다른 함수에서 값을 반환받아서 쓸 수 있어.
-      // 받아서
       const result = createLottoArr();
-      // 적용
-      document.getElementById("one").innerText = result;
+      const element = createNumberBallElement(result);
+
+      // 이미 추출한 번호가 있다면 지우는 코드
+      const prev = Array.from(
+        document.getElementById("one").getElementsByClassName("ball-container")
+      )[0];
+      if (prev) prev.remove();
+      //
+      document.getElementById("one").appendChild(element);
     }
 
     function fiveLottoArray() {
-      let result = [];
+      let results = [];
       for (a = 0; a < 5; a++) {
-        // 반복문 내에서 받아서 배열에 넣고
-        result.push(createLottoArr());
+        results.push(createLottoArr());
       }
-      // 적용
-      document.getElementById("five").innerHTML = result.join("<br />");
+
+      const prev = Array.from(
+        document.getElementById("five").getElementsByClassName("ball-container")
+      );
+
+      prev.forEach((container) => container.remove());
+
+      results.forEach((result) => {
+        const element = createNumberBallElement(result);
+        document.getElementById("five").appendChild(element);
+      });
     }
 
     // function oneLottoArray() {
