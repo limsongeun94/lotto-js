@@ -126,103 +126,101 @@
       </tbody>
     </table>
   </body>
+  <script
+    src="https://code.jquery.com/jquery-3.6.4.min.js"
+    integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8="
+    crossorigin="anonymous"
+  ></script>
   <script>
     // 포함할 번호와 제외할 번호의 라벨-체크박스를 화면에 출력하는 함수
-    const printInputNum = (el, prefix) => {
+    function printInputNum(el, prefix) {
       for (let i = 1; i <= 45; i++) {
-        let item = document.createElement("div");
-        let label = document.createElement("label");
-        let input = document.createElement("input");
+        let $item = $("<div></div>");
+        let $label = $("<label></label>");
+        let $input = $("<input></input>");
 
-        label.setAttribute("for", prefix + i);
-        label.innerText = i < 10 ? "0" + i : i;
-        input.setAttribute("type", "checkbox");
-        input.setAttribute("value", i);
-        input.id = prefix + i;
-        input.name = input.id.substr(0, 3) === "ex_" ? "except" : "include";
+        $label.text(i < 10 ? "0" + i : i);
+        $label.attr("for", prefix + i);
 
-        item.appendChild(label);
-        item.appendChild(input);
-        el.appendChild(item);
+        $input.attr("type", "checkbox");
+        $input.val(i);
+        $input.attr("id", prefix + i);
+        $input.attr(
+          "name",
+          $input.attr("id").substr(0, 3) === "ex_" ? "except" : "include"
+        );
+
+        $item.append($label);
+        $item.append($input);
+        el.append($item);
       }
-    };
-    let include = document.getElementById("include_number");
-    let except = document.getElementById("except_number");
-    printInputNum(include, "in_");
-    printInputNum(except, "ex_");
-
-    const resetLottoArry = () => {
-      let input = document.getElementsByName("include");
-      Array.from(input).forEach((el) => {
-        // console.log(el);
-        el.checked = false;
-      });
-    };
+    }
+    printInputNum($("#include_number"), "in_");
+    printInputNum($("#except_number"), "ex_");
 
     // 포함할 번호의 체크박스의 체크를 각 조건에 따라 제어하는 함수
-    const handleIncludeCheckBox = () => {
+    function handleIncludeCheckBox() {
       let inClicked = [];
-      let input = document.getElementsByName("include");
-
-      console.log(inClicked, "함수시작");
+      let $input = $('[name="include"]');
 
       for (let i = 1; i <= 45; i++) {
-        input[i - 1].onchange = (evt) => {
+        $input.eq(i - 1).change(function () {
           // 체크 해제
-          if (evt.target.checked == false) {
-            inClicked = inClicked.filter((x) => x != i);
-            console.log(inClicked, "if evt dddd - false");
+          if ($(event.target).is(":checked") == false) {
+            inClicked = jQuery.grep(inClicked, function (x) {
+              return x != i;
+            });
           }
           // 체크 시도
           else {
             // 체크 불가 1
             if (inClicked.length + 1 > 6) {
               alert("포함할 번호는 6개 넘게 선택할 수 없습니다.");
-              evt.target.checked = false;
+              $(event.target).prop("checked", false);
             }
             // 체크 불가 2
-            else if (document.getElementById("ex_" + i).checked == true) {
+            else if ($("#ex_" + i).is(":checked") == true) {
               alert(
                 "제외할 번호와 같은 숫자의 포함할 번호는 선택할 수 없습니다."
               );
-              evt.target.checked = false;
+              $(event.target).prop("checked", false);
             }
             // 체크 가능
             else {
-              console.log(i, "push");
               inClicked.push(i);
             }
           }
-          console.log(inClicked, "arr");
-        };
+          console.log(inClicked);
+        });
       }
-    };
+    }
     handleIncludeCheckBox();
 
     // 제외할 번호의 체크박스의 체크를 각 조건에 따라 제어하는 함수
     const handleExceptCheckBox = () => {
       let exClicked = [];
-      let input = document.getElementsByName("except");
-
+      let $input = $('[name="except"]');
       for (let i = 1; i <= 45; i++) {
-        input[i - 1].onchange = (e) => {
+        $input.eq(i - 1).change(function () {
           // 체크 해제
-          if (e.target.checked == false) {
-            exClicked = exClicked.filter((x) => x != i);
+          if ($(event.target).is(":checked") == false) {
+            exClicked = jQuery.grep(exClicked, function (x) {
+              return x != i;
+            });
           }
           //체크시도
           else {
             // 체크불가1
             if (exClicked.length + 1 > 39) {
               alert("포함할 번호는 39개 넘게 선택할 수 없습니다.");
-              e.target.checked = false;
+              $(event.target).prop("checked", false);
             }
             //체크불가2
-            else if (document.getElementById("in_" + i).checked == true) {
+            else if ($("#in_" + i).is(":checked") == true) {
               alert(
                 "포함할 번호와 같은 숫자의 제외할 번호는 선택할 수 없습니다."
               );
-              e.target.checked = false;
+              $(event.target).prop("checked", false);
             }
             // 체크가능
             else {
@@ -230,25 +228,29 @@
             }
           }
           console.log(exClicked);
-        };
+        });
       }
     };
     handleExceptCheckBox();
 
     // 출력할 로또번호의 배열을 생성하는 함수
-    const createLottoArr = () => {
-      let in_input = document.getElementsByName("include");
-      let ex_input = document.getElementsByName("except");
+    function createLottoArr() {
+      let $in_input = $('[name="include"]');
+      let $ex_input = $('[name="except"]');
 
-      // 제외할번호 중에서 체크된 숫자
-      let notInclude = Array.from(ex_input)
-        .filter((el) => el.checked)
-        .map((el) => parseInt(el.value));
+      // 제외할번호 중에서 체크된 숫자 NaN 나옴
+      let notInclude = $ex_input
+        .filter(":checked")
+        .map((i, el) => parseInt($(el).val()));
+      notInclude = Array.from(notInclude);
 
-      // 포함할번호 중에서 체크된 숫자
-      let isInclude = Array.from(in_input)
-        .filter((el) => el.checked)
-        .map((el) => parseInt(el.value));
+      // 포함할번호 중에서 체크된 숫자  NaN 나옴
+      let isInclude = $in_input
+        .filter(":checked")
+        .map((i, el) => parseInt($(el).val()));
+      isInclude = Array.from(isInclude);
+
+      console.log("안녕", notInclude, isInclude);
 
       // 로또번호 배열에 포함할 번호 추가
       let lottoarray = [];
@@ -278,53 +280,49 @@
         }
       }
       return lottoarray;
-    };
+    }
 
     // 로또번호 배열을 style과 함께 그리는 함수
-    const drawLottoArr = (numbers) => {
-      const container = document.createElement("div");
-      container.classList.add("ball-container");
+    function drawLottoArr(numbers) {
+      const $container = $("<div></div>");
+      $container.addClass("ball-container");
       const numberEls = numbers.map((x) => {
-        const el = document.createElement("div");
-        el.innerText = x;
-        el.classList.add("number-ball");
-        return el;
+        const $el = $("<div></div>");
+        $el.text(x);
+        $el.addClass("number-ball");
+        return $el;
       });
       numberEls.forEach((el) => {
-        container.appendChild(el);
+        $container.append(el);
       });
-      return container;
-    };
+      return $container;
+    }
 
-    const oneLottoArray = () => {
+    function oneLottoArray() {
       const result = createLottoArr();
       const element = drawLottoArr(result);
 
       // 이전에 출력된 번호가 있다면 지우는 코드
-      const prev = Array.from(
-        document.getElementById("one").getElementsByClassName("ball-container")
-      )[0];
+      const prev = $("#one > .ball-container");
+      // )[0];
       if (prev) prev.remove();
-      //
-      document.getElementById("one").appendChild(element);
-    };
+      $("#one").append(element);
+    }
 
-    const fiveLottoArray = () => {
+    function fiveLottoArray() {
       let results = [];
       for (a = 0; a < 5; a++) {
         results.push(createLottoArr());
       }
 
       // 이전에 출력된 번호가 있다면 지우는 코드
-      const prev = Array.from(
-        document.getElementById("five").getElementsByClassName("ball-container")
-      );
+      const prev = Array.from($("#five > .ball-container"));
       prev.forEach((container) => container.remove());
 
       results.forEach((result) => {
         const element = drawLottoArr(result);
-        document.getElementById("five").appendChild(element);
+        $("#five").append(element);
       });
-    };
+    }
   </script>
 </html>
