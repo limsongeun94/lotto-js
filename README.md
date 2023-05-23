@@ -1,5 +1,7 @@
 # 로또 번호 추출기
 
+<img width="35%" src="https://github.com/limsongeun94/lotto-js/assets/84313959/6f9cdb43-9a86-4a91-add7-7c7daee0271c">
+
 ## 프로젝트 소개
 직접 포함하고 싶은 숫자와 제외하고 싶은 숫자를 선택해 로또 번호를 추천받을 수 있습니다.
 
