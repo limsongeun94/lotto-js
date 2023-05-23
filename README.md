@@ -1,7 +1,7 @@
 # 로또 번호 추출기
 
 <p align="center">
-<img width="50%" src="https://github.com/limsongeun94/lotto-js/assets/84313959/6f9cdb43-9a86-4a91-add7-7c7daee0271c">
+<img width="45%" src="https://github.com/limsongeun94/lotto-js/assets/84313959/6f9cdb43-9a86-4a91-add7-7c7daee0271c">
  </p>
 
 ## 프로젝트 소개
